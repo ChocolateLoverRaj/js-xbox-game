@@ -130,9 +130,12 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\html\index.css" />
-    <Content Include="Assets\html\index.html" />
-    <Content Include="Assets\html\index.js" />
+    <Content Include="Assets\WebView\index.css" />
+    <Content Include="Assets\WebView\index.html" />
+    <Content Include="Assets\WebView\index.js" />
+    <Content Include="Assets\WebView2\index.css" />
+    <Content Include="Assets\WebView2\index.html" />
+    <Content Include="Assets\WebView2\index.js" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -154,7 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.13</Version>
+      <Version>6.2.14</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.8.0</Version>

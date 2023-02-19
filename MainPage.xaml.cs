@@ -30,22 +30,58 @@ namespace Test_UWP_For_Xbox
         public MainPage()
         {
             this.InitializeComponent();
-            LoadWebview2();
+            LoadWebview();
         }
 
-        private async void LoadWebview2()
+        private async void LoadWebview()
         {
+            const string messageToSend = "Message from UWP app";
             await webView2.EnsureCoreWebView2Async();
-            webView2.CoreWebView2.SetVirtualHostNameToFolderMapping("virtual", "", CoreWebView2HostResourceAccessKind.Allow);
-            webView2.CoreWebView2.NavigationCompleted += (s, e) => {
-                webView2.CoreWebView2.PostWebMessageAsString("hi");
-            };
-            webView2.CoreWebView2.WebMessageReceived += async (s, e) =>
+            if (webView2.CoreWebView2 != null && true) 
             {
-                await new MessageDialog(e.TryGetWebMessageAsString()).ShowAsync();
-                Debug.WriteLine("Done showing dialog async");
-            };
-            webView2.CoreWebView2.Navigate("https://virtual/Assets/html/index.html");
+                webView2.CoreWebView2.SetVirtualHostNameToFolderMapping("virtual", "Assets/WebView2", CoreWebView2HostResourceAccessKind.Allow);
+                webView2.CoreWebView2.NavigationCompleted += (s, e) => {
+                    webView2.CoreWebView2.PostWebMessageAsString(messageToSend);
+                };
+                webView2.CoreWebView2.WebMessageReceived += (s, e) =>
+                {
+                    OnWebViewMessage(e.TryGetWebMessageAsString());
+                    Debug.WriteLine("Done showing dialog async");
+                };
+                webView2.CoreWebView2.Navigate("https://virtual/index.html");
+            } else
+            {
+                Debug.WriteLine("WebView2 not available");
+                WebView webView = new WebView();
+                webView.NavigationCompleted += (sender, args) =>
+                {
+                    if (webView.Parent == null)
+                    {
+                        if (args.IsSuccess)
+                        {
+                            // Replace the current contents of this page with the WebView
+                            this.Content = webView;
+                            webView.Focus(FocusState.Programmatic);
+                        }
+                        else
+                        {
+                            // WebView navigation failed.
+                            // TODO: Show an error state
+                            Debug.WriteLine($"Initial WebView navigation failed with error status: {args.WebErrorStatus}");
+                        }
+                    }
+                };
+                webView.ScriptNotify += (s, e) =>
+                {
+                    OnWebViewMessage(e.Value);
+                };
+                webView.Navigate(new Uri("ms-appx-web:///Assets/WebView/index.html"));
+            }
+        }
+
+        private async void OnWebViewMessage (string message)
+        {
+            await new MessageDialog(message).ShowAsync();
         }
     }
 }
