@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import App from './App'
 import { init, setKeyMap } from '@noriginmedia/norigin-spatial-navigation'
 
-init()
 setKeyMap({
   left: [
     37, // LeftArrow
@@ -30,10 +29,12 @@ setKeyMap({
     139 // NavigationDown
   ],
   enter: [
+    13, // Enter
     142, // NavigationAccept
     195 // GamepadA
   ]
 })
+init()
 
 const rootElement = document.createElement('div')
 document.body.appendChild(rootElement)

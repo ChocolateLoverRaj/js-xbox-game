@@ -30,6 +30,14 @@ const config: Configuration = {
         presets: ['@babel/preset-react', '@babel/preset-typescript'],
         plugins: ['react-require']
       }
+    }, {
+      test: /\.tsx?/,
+      include: /node_modules\/observables\//,
+      loader: 'babel-loader',
+      options: {
+        presets: ['@babel/preset-react', '@babel/preset-typescript'],
+        plugins: ['react-require']
+      }
     }]
   },
   devServer: {
