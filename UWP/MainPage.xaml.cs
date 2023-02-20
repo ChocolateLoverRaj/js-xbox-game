@@ -101,7 +101,7 @@ namespace Test_UWP_For_Xbox
                 //webView.WebResourceRequested += (s, e) =>
                 //{
 
-                webView.Navigate(new Uri("ms-appx-web:///Assets/WebView/index.html"));
+                webView.Navigate(new Uri("https://cute-results-post-98-33-112-127.loca.lt"));
                 
                 // webView.Navigate(new Uri("https://gamepad-api.netlify.app/"));
             }
@@ -112,7 +112,6 @@ namespace Test_UWP_For_Xbox
             if (Frame.CanGoBack)
             {
                 Frame.GoBack();
-                e.Handled = true;
             }
             e.Handled = true;
         }
