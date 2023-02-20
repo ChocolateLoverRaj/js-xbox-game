@@ -17,6 +17,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
 using System.Diagnostics;
+using Windows.UI.ViewManagement;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -35,6 +37,27 @@ namespace Test_UWP_For_Xbox
 
         private async void LoadWebview()
         {
+            // By default, Xbox gives you a border around your content to help you keep it inside a "TV-safe"
+            // area. This helps protect you from drawing too close to the edges of the screen where content may
+            // not be visible due to physical variations in televisions.
+            //
+            // This line disables that behavior. If you want, you can restore the automatic TV-safe area by
+            // commenting this line out. Otherwise, be careful not to draw vital content too close to the edge
+            // of the screen. Details can be found here:
+            // https://docs.microsoft.com/en-us/windows/apps/design/devices/designing-for-tv#tv-safe-area
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+
+            // By default, XAML apps are scaled up 2x on Xbox. This line disables that behavior, allowing the
+            // app to use the actual resolution of the device (1920 x 1080 pixels).
+            if (!ApplicationViewScaling.TrySetDisableLayoutScaling(true))
+            {
+                Debug.WriteLine("Error: Failed to disable layout scaling.");
+            }
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
+
+            // this.RequiresPointer = RequiresPointer.Never;
+
             const string messageToSend = "Message from UWP app";
             await webView2.EnsureCoreWebView2Async();
             if (webView2.CoreWebView2 != null && true) 
@@ -75,8 +98,23 @@ namespace Test_UWP_For_Xbox
                 {
                     OnWebViewMessage(e.Value);
                 };
+                //webView.WebResourceRequested += (s, e) =>
+                //{
+
                 webView.Navigate(new Uri("ms-appx-web:///Assets/WebView/index.html"));
+                
+                // webView.Navigate(new Uri("https://gamepad-api.netlify.app/"));
             }
+        }
+
+        private void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+                e.Handled = true;
+            }
+            e.Handled = true;
         }
 
         private async void OnWebViewMessage (string message)
