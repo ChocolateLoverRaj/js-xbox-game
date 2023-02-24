@@ -4,6 +4,8 @@
     "gamepad",
     "gamepadconnected",
     "gamepaddisconnected",
+    "norigin",
+    "noriginmedia",
     "Paranjpe",
     "pnpm",
     "rjsf"

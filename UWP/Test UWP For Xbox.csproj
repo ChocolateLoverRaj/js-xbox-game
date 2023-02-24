@@ -130,12 +130,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\WebView\index.css" />
     <Content Include="Assets\WebView\index.html" />
-    <Content Include="Assets\WebView\index.js" />
-    <Content Include="Assets\WebView2\index.css" />
-    <Content Include="Assets\WebView2\index.html" />
-    <Content Include="Assets\WebView2\index.js" />
+    <Content Include="Assets\WebView\main.js" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

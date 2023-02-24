@@ -32,7 +32,7 @@ const config: Configuration = {
       exclude: /node_modules\/(?!observables\/).*/,
       loader: 'babel-loader',
       options: {
-        presets: ['@babel/preset-react', '@babel/preset-typescript'],
+        presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
         plugins: ['react-require']
       }
     }, {
@@ -40,14 +40,15 @@ const config: Configuration = {
       include: /node_modules\/observables\//,
       loader: 'babel-loader',
       options: {
-        presets: ['@babel/preset-react', '@babel/preset-typescript'],
+        presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
         plugins: ['react-require']
       }
     }]
   },
   devServer: {
     allowedHosts: 'all'
-  }
+  },
+  target: ['web', 'es2017']
 }
 
 export default config

@@ -1,20 +1,7 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel.Resources.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
 using System.Diagnostics;
 using Windows.UI.ViewManagement;
@@ -60,9 +47,9 @@ namespace Test_UWP_For_Xbox
 
             const string messageToSend = "Message from UWP app";
             await webView2.EnsureCoreWebView2Async();
-            if (webView2.CoreWebView2 != null && true) 
+            if (webView2.CoreWebView2 != null) 
             {
-                webView2.CoreWebView2.SetVirtualHostNameToFolderMapping("virtual", "Assets/WebView2", CoreWebView2HostResourceAccessKind.Allow);
+                webView2.CoreWebView2.SetVirtualHostNameToFolderMapping("virtual", "Assets/WebView", CoreWebView2HostResourceAccessKind.Allow);
                 webView2.CoreWebView2.NavigationCompleted += (s, e) => {
                     webView2.CoreWebView2.PostWebMessageAsString(messageToSend);
                 };
@@ -71,7 +58,7 @@ namespace Test_UWP_For_Xbox
                     OnWebViewMessage(e.TryGetWebMessageAsString());
                     Debug.WriteLine("Done showing dialog async");
                 };
-                webView2.CoreWebView2.Navigate("https://virtual/index.html");
+                webView2.CoreWebView2.Navigate("http://virtual/index.html");
             } else
             {
                 Debug.WriteLine("WebView2 not available");
@@ -98,12 +85,8 @@ namespace Test_UWP_For_Xbox
                 {
                     OnWebViewMessage(e.Value);
                 };
-                //webView.WebResourceRequested += (s, e) =>
-                //{
 
-                webView.Navigate(new Uri("https://cute-results-post-98-33-112-127.loca.lt"));
-                
-                // webView.Navigate(new Uri("https://gamepad-api.netlify.app/"));
+                webView.Navigate(new Uri("ms-appx-web:///Assets/WebView/index.html"));
             }
         }
 
