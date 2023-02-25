@@ -4,6 +4,7 @@ import internalGetDevices from './internalGetDevices'
 
 const mobxUsbDevicesAtom = createAtom('USB Devices', () => {
   if (devices.get() === undefined) {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     internalGetDevices()
   }
 })

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Title, HeadProvider } from 'react-head'
 import Camera from './Camera'
-import Usb from './Usb'
+import Usb from './usb/Usb'
 
 const App: FC = () => {
   return (
