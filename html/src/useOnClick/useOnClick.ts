@@ -1,7 +1,12 @@
 import { GamepadListener } from 'gamepad.js'
 import { useEffect } from 'react'
+import { useWindowEventListener } from 'rooks'
 
 const useOnClick = (callback: () => void, focused: boolean): void => {
+  useWindowEventListener('keydown', ({ key }: KeyboardEvent) => {
+    if (key === 'enter') callback()
+  })
+
   useEffect(() => {
     if (focused) {
       const listener = new GamepadListener()
@@ -9,6 +14,7 @@ const useOnClick = (callback: () => void, focused: boolean): void => {
         if (button === 0 && pressed as boolean) callback()
       })
       listener.start()
+
       return () => {
         listener.stop()
       }

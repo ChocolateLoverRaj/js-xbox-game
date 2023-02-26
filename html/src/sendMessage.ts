@@ -4,7 +4,7 @@ const sendMessage = (message: string): void => {
   } else if ('notify' in window.external /* typeof window.external.notify doesn't work in the old WebView */) {
     window.external.notify(message)
   } else {
-    throw new Error("Can't send message")
+    alert(message)
   }
 }
 

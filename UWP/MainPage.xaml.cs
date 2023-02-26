@@ -46,8 +46,10 @@ namespace Test_UWP_For_Xbox
             // this.RequiresPointer = RequiresPointer.Never;
 
             const string messageToSend = "Message from UWP app";
+            const bool useWebViewEvenIfWebView2IsAvailable = true;
+
             await webView2.EnsureCoreWebView2Async();
-            if (webView2.CoreWebView2 != null) 
+            if (webView2.CoreWebView2 != null && !useWebViewEvenIfWebView2IsAvailable) 
             {
                 webView2.CoreWebView2.SetVirtualHostNameToFolderMapping("virtual", "Assets/WebView", CoreWebView2HostResourceAccessKind.Allow);
                 webView2.CoreWebView2.NavigationCompleted += (s, e) => {
@@ -61,7 +63,7 @@ namespace Test_UWP_For_Xbox
                 webView2.CoreWebView2.Navigate("http://virtual/index.html");
             } else
             {
-                Debug.WriteLine("WebView2 not available");
+                Debug.WriteLine("Using WebView");
                 WebView webView = new WebView();
                 webView.NavigationCompleted += (sender, args) =>
                 {
